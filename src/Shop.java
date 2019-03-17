@@ -109,6 +109,7 @@ public class Shop {
     }
     //
 
+    
     public HashMap<Good, Integer> getItemsSold() {
         return itemsSold;
     }
