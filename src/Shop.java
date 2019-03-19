@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Shop {
     private static int count = 0;
-    private static int unknownCount = 1;
+    private static int unknownCount = 0;
     private String name;
     private ArrayList<Customer> customers;
     private ArrayList<Repository> repositories;
@@ -101,11 +101,11 @@ public class Shop {
     public void addDiscount(Discount discount){
         discounts.add(discount);
     }
-    public void addDiscount(Discount discount, Customer customer){
+    public void addDiscount(Discount discount, Order order){
         if(discounts.indexOf(discount) == -1){
             this.addDiscount(discount);
         }
-        customer.getDiscounts().put(discount.getId(),false);
+        
     }
     //
 
