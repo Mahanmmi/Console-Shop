@@ -1,4 +1,5 @@
 public class Good {
+    private static int count = 0;
     private String name;
     private int id;
     private int price;
@@ -7,6 +8,7 @@ public class Good {
         this.name = name;
         this.id = id;
         this.price = price;
+        count++;
     }
 
     public String getName() {

@@ -7,6 +7,7 @@ public class Shop {
     private String name;
     private ArrayList<Customer> customers;
     private ArrayList<Repository> repositories;
+    private ArrayList<Order> orders;
     private ArrayList<Good> goods;
     private ArrayList<Discount> discounts;
     private HashMap<Good, Integer> itemsSold;
@@ -26,6 +27,7 @@ public class Shop {
         goods = new ArrayList<>();
         discounts = new ArrayList<>();
         itemsSold = new HashMap<>();
+        orders = new ArrayList<>();
         income = 0;
         count++;
     }
@@ -43,13 +45,20 @@ public class Shop {
         }
         return customers;
     }
+    public Customer searchCustomerById(int id){
+        for (Customer customer : customers) {
+            if(customer.getId() == id)
+                return customer;
+        }
+        return null;
+    }
     //
 
     //Repositories
     public void addRepository(Repository repository) {
-        for(int i=0;i<repositories.size();i++){
-            if(repository.getCapacity() < repositories.get(i).getCapacity()){
-                repositories.add(i,repository);
+        for (int i = 0; i < repositories.size(); i++) {
+            if (repository.getCapacity() < repositories.get(i).getCapacity()) {
+                repositories.add(i, repository);
                 return;
             }
         }
@@ -81,34 +90,55 @@ public class Shop {
     }
 
     public void increamentGood(Good good, int amount) {
-        for(Repository repositry : repositories) {
-            if(repositry.getFreeCapacity()>=amount){
-                repositry.addGood(good,amount);
+        for (Repository repository : repositories) {
+            if (repository.getFreeCapacity() >= amount) {
+                repository.addGood(good, amount);
             }
         }
     }
 
-    public Good[] getGoods(){
+    public Good[] getGoods() {
         Good[] goods = new Good[this.goods.size()];
         for (int i = 0; i < this.goods.size(); i++) {
             goods[i] = this.goods.get(i);
         }
         return goods;
     }
+
+    public Good searchGoodById(int id){
+        for (Good good : goods) {
+            if(good.getId() == id)
+                return good;
+        }
+        return null;
+    }
     //
 
     //Discounts
-    public void addDiscount(Discount discount){
+    public void addDiscount(Discount discount) {
         discounts.add(discount);
     }
-    public void addDiscount(Discount discount, Order order){
-        if(discounts.indexOf(discount) == -1){
-            this.addDiscount(discount);
+
+    public void addDiscount(Discount discount, Order order) {
+        if (discounts.indexOf(discount) != -1) {
+            order.addDiscount(discount);
+            discounts.remove(discount);
         }
-        
     }
     //
 
+    //Orders
+    public void addOrder(Order order){
+        orders.add(order);
+    }
+    public Order searchOrderById(int id){
+        for (Order element : orders) {
+            if (element.getId() == id)
+                return element;
+        }
+        return null;
+    }
+    //
 
     public HashMap<Good, Integer> getItemsSold() {
         return itemsSold;

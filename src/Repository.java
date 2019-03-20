@@ -25,11 +25,8 @@ public class Repository {
     public void removeGood(Good good, int amount) {
         if (goods.containsKey(good)) {
             goods.put(good, goods.get(good) - amount);
-        } else {
-            System.out.println("EROOR GOOD NOT FOUND");
-            return;
+            freeCapacity+=amount;
         }
-        freeCapacity+=amount;
     }
 
     public int getId() {
