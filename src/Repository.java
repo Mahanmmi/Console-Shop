@@ -22,11 +22,13 @@ public class Repository {
         freeCapacity-=amount;
     }
 
-    public void removeGood(Good good, int amount) {
-        if (goods.containsKey(good)) {
+    public boolean removeGood(Good good, int amount) {
+        if (goods.containsKey(good) && goods.get(good) >= amount) {
             goods.put(good, goods.get(good) - amount);
             freeCapacity+=amount;
+            return true;
         }
+        return false;
     }
 
     public int getId() {
@@ -43,5 +45,16 @@ public class Repository {
 
     public HashMap<Good, Integer> getGoods() {
         return goods;
+    }
+
+    public boolean checkRepository(Good good, int amount){
+        return goods.containsKey(good) && goods.get(good) >= amount;
+    }
+
+    @Override
+    public String toString() {
+        return id +
+                "," + capacity +
+                "," + freeCapacity;
     }
 }

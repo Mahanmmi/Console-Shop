@@ -5,7 +5,9 @@ public class Main {
 
     public static void main(String[] args) {
         Shop myShop = new Shop("MyShop");
-        while (true) {
+
+        boolean isEnded = false;
+        while (!isEnded) {
             String operationMode = scanner.next();
             switch (operationMode) {
                 case "add": {
@@ -36,6 +38,7 @@ public class Main {
                             int repositoryCapacity = scanner.nextInt();
                             Repository repository = new Repository(repositoryId, repositoryCapacity);
                             myShop.addRepository(repository);
+                            myShop.addRepositoryById(repository);
                             break;
                         }
                         case "order": {
@@ -45,7 +48,9 @@ public class Main {
                             if (customer == null) {
                                 break;
                             }
+
                             Order order = new Order(orderId, customer);
+                            customer.addOrder(order);
                             myShop.addOrder(order);
                             break;
                         }
@@ -61,28 +66,91 @@ public class Main {
                             int goodId = scanner.nextInt();
                             int goodAmount = scanner.nextInt();
                             Order order = myShop.searchOrderById(orderId);
-                            if(order == null){
+                            if (order == null) {
                                 break;
                             }
                             Good good = myShop.searchGoodById(goodId);
-                            order.addItem(good,goodAmount);
+                            order.addItem(good, goodAmount);
                         }
-                        case "discount":{
+                        case "discount": {
                             int discountId = scanner.nextInt();
                             int discountPercent = scanner.nextInt();
-                            Discount discount = new Discount(discountId,discountPercent);
+                            Discount discount = new Discount(discountId, discountPercent);
                             myShop.addDiscount(discount);
                             break;
                         }
                     }
                     break;
                 }
-                case "report":
+                case "report": {
+                    String objectMode = scanner.next();
+                    switch (objectMode) {
+                        case "customers": {
+                            Customer[] customers = myShop.getCustomers();
+                            for (Customer element :
+                                    customers) {
+                                System.out.println(element);
+                            }
+                            break;
+                        }
+                        case "repositories": {
+                            Repository[] repositories = myShop.getRepositories();
+                            for (Repository element :
+                                    repositories) {
+                                System.out.println(element);
+                            }
+                            break;
+                        }
+                        case "income": {
+                            System.out.println(myShop.getIncome());
+                            break;
+                        }
+                    }
                     break;
-                case "remove":
+                }
+                case "remove": {
+                    String objectMode = scanner.next();
+                    switch (objectMode) {
+                        case "item": {
+                            int orderId = scanner.nextInt();
+                            int goodId = scanner.nextInt();
+                            Order order = myShop.searchOrderById(orderId);
+                            Good good = myShop.searchGoodById(goodId);
+                            order.removeItem(good);
+                            break;
+                        }
+                    }
+                }
+                case "submit": {
+                    String objectMode = scanner.next();
+                    switch (objectMode) {
+                        case "order": {
+                            int orderId = scanner.nextInt();
+                            Order order = myShop.searchOrderById(orderId);
+                            Customer customer = order.getCustomer();
+                            if (myShop.checkRepositories(order)) {
+                                int price = customer.submitOrder(order);
+                                if (price != -1) {
+                                    myShop.addSoldItems(order);
+                                    myShop.setIncome(myShop.getIncome() + price);
+                                }
+                            }
+                            break;
+                        }
+                        case "discount": {
+                            int orderId = scanner.nextInt();
+                            int discountId = scanner.nextInt();
+                            Order order = myShop.searchOrderById(orderId);
+                            Discount discount = myShop.searchDiscountById(discountId);
+                            myShop.addDiscount(discount, order);
+                        }
+                    }
                     break;
-                case "submit":
+                }
+                case "terminate": {
+                    isEnded = true;
                     break;
+                }
             }
         }
     }

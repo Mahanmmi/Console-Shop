@@ -13,7 +13,6 @@ public class Order {
     public Order(int id, Customer customer) {
         this.id = id;
         this.customer = customer;
-        customer.addOrder(this);
         status = "pending";
         items = new HashMap<>();
         discounts = new ArrayList<>();
@@ -64,5 +63,7 @@ public class Order {
         this.status = status;
     }
 
-
+    public Customer getCustomer() {
+        return customer;
+    }
 }

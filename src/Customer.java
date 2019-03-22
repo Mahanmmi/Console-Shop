@@ -21,11 +21,7 @@ public class Customer {
 
     public void addOrder(Order order) {
         orders.add(order);
-        if (order.getStatus().equals("pending")) {
-            pendingOrders.add(order);
-        } else {
-            submittedOrders.add(order);
-        }
+        pendingOrders.add(order);
     }
 
     public int getId() {
@@ -64,16 +60,25 @@ public class Customer {
         return submittedOrders;
     }
 
-    public int submitOrder(Order order){ // 0 -> successful -1 -> not successful
+    public int submitOrder(Order order) { // 0 -> successful -1 -> not successful
         int price = order.calculatePrice();
-        if(price > balance)
+        if (price > balance)
             return -1;
-        else{
-            balance-=price;
+        else {
+            balance -= price;
             pendingOrders.remove(order);
             order.setStatus("submitted");
             submittedOrders.add(order);
-            return 0;
+            return price;
         }
+    }
+
+    @Override
+    public String toString() {
+        return id +
+                "," + name +
+                "," + balance +
+                "," + orders.size() +
+                "," + submittedOrders.size();
     }
 }
