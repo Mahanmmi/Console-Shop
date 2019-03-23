@@ -13,14 +13,14 @@ public class Main {
                 case "add": {
                     String objectMode = scanner.next();
                     switch (objectMode) {
-                        case "customer": {
+                        case "customer": { //add customer
                             int customerId = scanner.nextInt();
                             String customerName = scanner.next();
                             Customer customer = new Customer(customerName, customerId);
                             myShop.addCustomer(customer);
                             break;
                         }
-                        case "good": {
+                        case "good": { //add good
                             int goodId = scanner.nextInt();
                             String goodName = scanner.next();
                             int goodPrice = scanner.nextInt();
@@ -33,7 +33,7 @@ public class Main {
                             myShop.increamentGood(good, goodAmount);
                             break;
                         }
-                        case "repository": {
+                        case "repository": { //add repository
                             int repositoryId = scanner.nextInt();
                             int repositoryCapacity = scanner.nextInt();
                             Repository repository = new Repository(repositoryId, repositoryCapacity);
@@ -41,13 +41,11 @@ public class Main {
                             myShop.addRepositoryById(repository);
                             break;
                         }
-                        case "order": {
+                        case "order": { //add order
                             int orderId = scanner.nextInt();
                             int orderCustomerId = scanner.nextInt();
+
                             Customer customer = myShop.searchCustomerById(orderCustomerId);
-                            if (customer == null) {
-                                break;
-                            }
 
                             Order order = new Order(orderId, customer);
                             customer.addOrder(order);
@@ -71,6 +69,7 @@ public class Main {
                             }
                             Good good = myShop.searchGoodById(goodId);
                             order.addItem(good, goodAmount);
+                            break;
                         }
                         case "discount": {
                             int discountId = scanner.nextInt();
@@ -127,6 +126,12 @@ public class Main {
                         case "order": {
                             int orderId = scanner.nextInt();
                             Order order = myShop.searchOrderById(orderId);
+//                            Order[] abcd = myShop.getOrders();
+//                            for (int i = 0; i < abcd.length; i++) {
+//                                System.out.println(i + "->>> " + abcd[i]);
+//                            }
+//                            if(order == null)
+//                                break;
                             Customer customer = order.getCustomer();
                             if (myShop.checkRepositories(order)) {
                                 int price = customer.submitOrder(order);
@@ -141,6 +146,7 @@ public class Main {
                             int orderId = scanner.nextInt();
                             int discountId = scanner.nextInt();
                             Order order = myShop.searchOrderById(orderId);
+                            System.out.println("order = " + order);
                             Discount discount = myShop.searchDiscountById(discountId);
                             myShop.addDiscount(discount, order);
                         }

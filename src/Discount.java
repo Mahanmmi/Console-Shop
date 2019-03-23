@@ -14,7 +14,7 @@ public class Discount {
         return percent;
     }
 
-    public void setOrder(Order order){
+    public void setOrder(Order order) {
         this.order = order;
     }
 

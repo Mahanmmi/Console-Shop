@@ -181,9 +181,9 @@ public class Shop {
         }
     }
 
-    public Discount searchDiscountById(int id){
-        for (Discount discount:discounts) {
-            if(discount.getId() == id)
+    public Discount searchDiscountById(int id) {
+        for (Discount discount : discounts) {
+            if (discount.getId() == id)
                 return discount;
         }
         return null;
@@ -201,6 +201,14 @@ public class Shop {
                 return element;
         }
         return null;
+    }
+
+    public Order[] getOrders() {
+        Order[] out = new Order[orders.size()];
+        for (int i = 0; i < orders.size(); i++) {
+            out[i] = orders.get(i);
+        }
+        return out;
     }
     //
 

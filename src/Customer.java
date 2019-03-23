@@ -60,7 +60,7 @@ public class Customer {
         return submittedOrders;
     }
 
-    public int submitOrder(Order order) { // 0 -> successful -1 -> not successful
+    public int submitOrder(Order order) { // -1 -> not successful
         int price = order.calculatePrice();
         if (price > balance)
             return -1;

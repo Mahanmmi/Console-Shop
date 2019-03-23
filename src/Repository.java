@@ -17,15 +17,15 @@ public class Repository {
         if (goods.containsKey(good)) {
             goods.put(good, goods.get(good) + amount);
         } else {
-            goods.put(good,amount);
+            goods.put(good, amount);
         }
-        freeCapacity-=amount;
+        freeCapacity -= amount;
     }
 
     public boolean removeGood(Good good, int amount) {
         if (goods.containsKey(good) && goods.get(good) >= amount) {
             goods.put(good, goods.get(good) - amount);
-            freeCapacity+=amount;
+            freeCapacity += amount;
             return true;
         }
         return false;
@@ -47,7 +47,7 @@ public class Repository {
         return goods;
     }
 
-    public boolean checkRepository(Good good, int amount){
+    public boolean checkRepository(Good good, int amount) {
         return goods.containsKey(good) && goods.get(good) >= amount;
     }
 
