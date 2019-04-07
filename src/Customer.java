@@ -1,14 +1,13 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Customer {
     private static int count = 0;
     private String name;
     private int id;
     private int balance;
-    ArrayList<Order> orders;
-    ArrayList<Order> pendingOrders;
-    ArrayList<Order> submittedOrders;
+    private ArrayList<Order> orders;
+    private ArrayList<Order> pendingOrders;
+    private ArrayList<Order> submittedOrders;
 
     public Customer(String name, int id) {
         this.name = name;

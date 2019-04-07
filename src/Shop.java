@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 public class Shop {
     private static int count = 0;
@@ -91,32 +91,34 @@ public class Shop {
     public boolean checkRepositories(Order order) {
         HashMap<Good, Integer> orderGoods = order.getItems();
 
-        ArrayList<Integer> repositoryList = new ArrayList<>();
+        ArrayList<Repository> repositoryList = new ArrayList<>();
 
-        for (Map.Entry<Good, Integer> entry : orderGoods.entrySet()) {
+        Set<Map.Entry<Good, Integer>> orderGoodsEntries = orderGoods.entrySet();
+
+        for (Map.Entry<Good, Integer> entry : orderGoodsEntries) {
             boolean isGoodAvailable = false;
-            for (int i = 0; i < repositories.size(); i++) {
-                Repository repository = repositories.get(i);
+            for (int i = 0; i < repositoriesById.size(); i++) {
+                Repository repository = repositoriesById.get(i);
                 isGoodAvailable = repository.removeGood(entry.getKey(), entry.getValue());
                 if (isGoodAvailable) {
-                    repositoryList.add(i);
+                    repositoryList.add(repository);
                     break;
                 }
             }
             if (!isGoodAvailable) {
-                for (Map.Entry<Good, Integer> entry2 : orderGoods.entrySet()) {
-                    for (int i = 0; i < repositoryList.size(); i++) {
-                        int abcd = 0;
-                        repositories.get(repositoryList.get(i)).addGood(entry2.getKey(), entry2.getValue());
-                    }
+                int counter = 0,abcde;
+                for (Map.Entry<Good, Integer> entry2 : orderGoodsEntries) {
+                    repositoryList.get(counter).addGood(entry2.getKey(), entry2.getValue());
+                    counter++;
                 }
                 return false;
             }
         }
-        for (Map.Entry<Good, Integer> entry : orderGoods.entrySet()) {
-            for (int i = 0; i < repositoryList.size(); i++) {
-                repositories.get(repositoryList.get(i)).addGood(entry.getKey(), entry.getValue());
-            }
+
+        int counter = 0;
+        for (Map.Entry<Good, Integer> entry : orderGoodsEntries) {
+            repositoryList.get(counter).addGood(entry.getKey(), entry.getValue());
+            counter++;
         }
         return true;
     }
@@ -141,6 +143,7 @@ public class Shop {
         for (Repository repository : repositories) {
             if (repository.getFreeCapacity() >= amount) {
                 repository.addGood(good, amount);
+                return;
             }
         }
     }

@@ -1,6 +1,7 @@
 import java.util.HashMap;
 
 public class Repository {
+    private static int count = 0;
     private int id;
     private int capacity;
     private int freeCapacity;
@@ -11,6 +12,7 @@ public class Repository {
         this.capacity = capacity;
         freeCapacity = capacity;
         goods = new HashMap<>();
+        count++;
     }
 
     public void addGood(Good good, int amount) {

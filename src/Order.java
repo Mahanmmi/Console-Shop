@@ -40,6 +40,7 @@ public class Order {
         for (Discount discount : discounts) {
             price *= ((100.0 - discount.getPercent()) / 100.0);
         }
+//        System.out.println("Order.calculatePrice price = " + price);
         return price;
     }
 
