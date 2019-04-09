@@ -97,11 +97,13 @@ public class Shop {
 
         for (Map.Entry<Good, Integer> entry : orderGoodsEntries) {
             boolean isGoodAvailable = false;
+            int numberOfAvailables = 0;
             for (int i = 0; i < repositoriesById.size(); i++) {
                 Repository repository = repositoriesById.get(i);
                 isGoodAvailable = repository.removeGood(entry.getKey(), entry.getValue());
                 if (isGoodAvailable) {
                     repositoryList.add(repository);
+                    numberOfAvailables++;
                     break;
                 }
             }
@@ -110,6 +112,8 @@ public class Shop {
                 for (Map.Entry<Good, Integer> entry2 : orderGoodsEntries) {
                     repositoryList.get(counter).addGood(entry2.getKey(), entry2.getValue());
                     counter++;
+                    if(counter>numberOfAvailables)
+                        break;
                 }
                 return false;
             }
